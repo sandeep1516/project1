@@ -2,13 +2,15 @@ pipeline {
 	agent any
 	
 	stages {
-		stage('SCM') {
+		stage ('SCM') {
 			steps{
-				echo 'checkout the code'
+				//checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'afd1b396-321e-4bfc-8b49-814ec18091ea', url: 'https://github.com/sandeep1516/project1.git']]])
+			
+			    echo "checkout the code"
 			}
 		}
-		stage('build') {
-			step {
+		stage ('build') {
+			steps {
 				echo 'build the code'
 			}
 		}
