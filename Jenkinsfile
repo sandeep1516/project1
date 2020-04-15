@@ -1,29 +1,25 @@
 pipeline {
-	agent any
-	
-	stages {
-		stage ('SCM') {
-			steps{
-				//checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'afd1b396-321e-4bfc-8b49-814ec18091ea', url: 'https://github.com/sandeep1516/project1.git']]])
-			
-			    echo "checkout the code"
-			}
-		}
-		stage ('build') {
-			steps {
-				echo 'build the code'
-			}
-		}
-		stage ('pushing repository'){
-			steps {
-				echo 'pushing to the repository'
-			}
-		}
-		stage ('pushing to application server'){
-			steps {
-				echo 'pushing to application server'
-
-			}
-	    } 
-	}
+    agent {
+        docker {
+            image 'maven'
+            args '-p 3000:3000' 
+        }
+    }
+    environment {
+        CI = 'true'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn archetype:generate -DgroupId=sri-sai-surya -DartifactId=borewell -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'pwd'
+		sh 'whomai'
+		echo "'./jenkins/scripts/test.sh'"
+            }
+        }
+    }
 }
