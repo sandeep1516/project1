@@ -1,0 +1,24 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: jenkinsserver
+spec:
+  replicas: 2
+  selector: 
+    matchLabels: 
+      component: server
+  template: 
+    metadata: 
+      labels: 
+        component: server
+    spec: 
+      containers: 
+        - 
+          image: endlasandeep/jenkins_4.10:sixthtry
+          name: jenkinshost
+          ports: 
+            - name: http-port
+              containerPort: 8080
+            - name: jnlp-port
+              containerPort: 50000
